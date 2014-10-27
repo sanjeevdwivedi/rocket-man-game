@@ -263,7 +263,7 @@
 		AFE8CCD619FDB70E00CF94D9 /* GameLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFE8CCD019FDB70E00CF94D9 /* GameLayer.cpp */; };
 		AFE8CCD719FDB70E00CF94D9 /* HighScoreLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFE8CCD219FDB70E00CF94D9 /* HighScoreLayer.cpp */; };
 		AFE8CCD819FDB70E00CF94D9 /* MainLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFE8CCD419FDB70E00CF94D9 /* MainLayer.cpp */; };
-		AFE8CCDB19FDB7F600CF94D9 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFE8CCD919FDB7F600CF94D9 /* AppDelegate.cpp */; };
+		AFE8CCDE19FEE63600CF94D9 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AFE8CCDC19FEE63600CF94D9 /* AppDelegate.cpp */; };
 		BF171245129291EC00B8313A /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB012928DE900B8313A /* OpenGLES.framework */; };
 		BF1712461292920000B8313A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB212928DE900B8313A /* libxml2.dylib */; };
 		BF1712471292920000B8313A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF170DB412928DE900B8313A /* libz.dylib */; };
@@ -817,8 +817,8 @@
 		AFE8CCD319FDB70E00CF94D9 /* HighScoreLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HighScoreLayer.h; sourceTree = "<group>"; };
 		AFE8CCD419FDB70E00CF94D9 /* MainLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MainLayer.cpp; sourceTree = "<group>"; };
 		AFE8CCD519FDB70E00CF94D9 /* MainLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainLayer.h; sourceTree = "<group>"; };
-		AFE8CCD919FDB7F600CF94D9 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../../TweeJumpCocos2dx.orig/TweeJumpCocos2dx/Classes/AppDelegate.cpp; sourceTree = "<group>"; };
-		AFE8CCDA19FDB7F600CF94D9 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../../TweeJumpCocos2dx.orig/TweeJumpCocos2dx/Classes/AppDelegate.h; sourceTree = "<group>"; };
+		AFE8CCDC19FEE63600CF94D9 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
+		AFE8CCDD19FEE63600CF94D9 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BF170DB012928DE900B8313A /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		BF170DB212928DE900B8313A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BF170DB412928DE900B8313A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -1352,9 +1352,9 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				AFE8CCDC19FEE63600CF94D9 /* AppDelegate.cpp */,
+				AFE8CCDD19FEE63600CF94D9 /* AppDelegate.h */,
 				AFE8CCCE19FDB70E00CF94D9 /* AppMacros.h */,
-				AFE8CCD919FDB7F600CF94D9 /* AppDelegate.cpp */,
-				AFE8CCDA19FDB7F600CF94D9 /* AppDelegate.h */,
 				AFE8CCCF19FDB70E00CF94D9 /* GameConfig.h */,
 				AFE8CCD019FDB70E00CF94D9 /* GameLayer.cpp */,
 				AFE8CCD119FDB70E00CF94D9 /* GameLayer.h */,
@@ -2198,7 +2198,7 @@
 				15C0B552196D412F007F909D /* CCActionTimelineCache.cpp in Sources */,
 				15A3D99A1682F7F9002FB0C5 /* cpGearJoint.c in Sources */,
 				15C0B569196D412F007F909D /* CCComAttribute.cpp in Sources */,
-				AFE8CCDB19FDB7F600CF94D9 /* AppDelegate.cpp in Sources */,
+				AFE8CCDE19FEE63600CF94D9 /* AppDelegate.cpp in Sources */,
 				15A3D99B1682F7F9002FB0C5 /* cpGrooveJoint.c in Sources */,
 				15C0B57C196D412F007F909D /* UILabelAtlas.cpp in Sources */,
 				15A3D99C1682F7F9002FB0C5 /* cpPinJoint.c in Sources */,
