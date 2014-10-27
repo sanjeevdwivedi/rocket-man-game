@@ -30,8 +30,15 @@ private:
     void _loadHighScores();
     void _updateHighScores();
     void _saveCurrentPlayer();
+
+#ifdef WP8
+    void _changePlayerDone(CCObject* pObject);
+    void _cancelPopupPlayer(CCObject* pObject);
+#else
     void _changePlayerDone();
     void _cancelPopupPlayer();
+#endif
+
     void _popUpPlayer();
     void button1Callback(cocos2d::CCObject* pSender);
     void button2Callback(cocos2d::CCObject* pSender);

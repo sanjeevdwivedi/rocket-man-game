@@ -37,14 +37,14 @@ void HighScoreLayer::_popUpPlayer()
     
     //
     
-    //CCMenuItemLabel* save = CCMenuItemLabel::create(CCLabelTTF::create("Save", "Arial", 20), this, menu_selector(HighScoreLayer::_changePlayerDone));
-    //save->setPosition(ccp(50, 50));
+    CCMenuItemLabel* save = CCMenuItemLabel::create(CCLabelTTF::create("Save", "Arial", 20), this, menu_selector(HighScoreLayer::_changePlayerDone));
+    save->setPosition(ccp(50, 50));
     //
-    //CCMenuItemLabel* cancel = CCMenuItemLabel::create(CCLabelTTF::create("Cancel", "Arial", 20), this, menu_selector(HighScoreLayer::_cancelPopupPlayer));
-    //cancel->setPosition(ccp(200, 50));
+    CCMenuItemLabel* cancel = CCMenuItemLabel::create(CCLabelTTF::create("Cancel", "Arial", 20), this, menu_selector(HighScoreLayer::_cancelPopupPlayer));
+    cancel->setPosition(ccp(200, 50));
     
-    //CCMenu* menu = CCMenu::create(save, cancel, NULL);
-    //menu->setPosition(ccp(0, 0));
+    CCMenu* menu = CCMenu::create(save, cancel, NULL);
+    menu->setPosition(ccp(0, 0));
     
     //
     
@@ -60,7 +60,7 @@ void HighScoreLayer::_popUpPlayer()
     //
     
     _playerPopup->addChild(title);
-    //_playerPopup->addChild(menu, 100, kPopUpPlayerTag);
+    _playerPopup->addChild(menu, 100, kPopUpPlayerTag);
     _playerPopup->addChild(playerName, 150, kPopUpEditBoxTag);
     
     _playerPopup->setVisible(false);
@@ -256,7 +256,11 @@ void HighScoreLayer::draw()
     ccDrawSolidRect(ccp(x,y), ccp(x+width, y+height), ccc4f(1.0f, 0.0f, 0.0f, 0.4f));
 }
 
+#ifdef WP8
+void HighScoreLayer::_changePlayerDone(CCObject* pObject)
+#else
 void HighScoreLayer::_changePlayerDone()
+#endif
 {
     CCEditBox* playerBox = (CCEditBox*) _playerPopup->getChildByTag(kPopUpEditBoxTag);
     CCUserDefault* defaults = CCUserDefault::sharedUserDefault();
@@ -268,7 +272,11 @@ void HighScoreLayer::_changePlayerDone()
     
 }
 
+#ifdef WP8
+void HighScoreLayer::_cancelPopupPlayer(CCObject* pObject)
+#else
 void HighScoreLayer::_cancelPopupPlayer()
+#endif
 {
     if(_playerPopup->isVisible())
     {
