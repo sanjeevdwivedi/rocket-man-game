@@ -25,22 +25,28 @@ void GameLayer::didAccelerate(CCAcceleration *pAccelerationValue)
     if(gameSuspended)
         return;
     
+    // the bird's acceleration, left and right
     float accel_filter = 0.1f;
     bird_velocity.x = bird_velocity.x * accel_filter + pAccelerationValue->x * (1.0f - accel_filter) * 500.0f;
 }
+
+// TODO: Does the game create all the levels in the beginning itself?
 
 GameLayer::GameLayer()
 {
     gameSuspended = true;
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
     
+    // Initialize all the platforms. Really? They predraw all the platforms??
     _initPlatforms();
     
+    // We don't need a packed sprite, we can pick individual textures. Here we are getting the sprite for the bird
     CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 44, 32));
     batchNode->addChild(bird, 4, kBird);
     
     CCSprite* bonus;
     
+    // the bonus sprites which say 5, 10 etc can be picked from here
     for(int i = 0; i < kNumBonuses; i++)
     {
         bonus = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608 + i * 32, 256, 25, 25));
@@ -55,7 +61,9 @@ GameLayer::GameLayer()
     _startGame();
     scheduleUpdate();
     
+    // We don't want touch interaction
     setTouchEnabled(false);
+    
     setAccelerometerEnabled(true);
     
 }
@@ -65,15 +73,20 @@ void GameLayer::update(float dt)
     if(gameSuspended)
         return;
     
+    // MainLayer shows the background with clouds that does just scrolls but does not interact
     MainLayer::update(dt);
     
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
     CCSprite* bird = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kBird));
     
     bird_position.x += bird_velocity.x * dt;
+    // birdLookingRight/Left is used to flip the bird in the right direction i.e. direction of the velocity
+    // so the bird does not travel backwards
     if(bird_velocity.x < -30.0f && birdLookingRight)
     {
         birdLookingRight = false;
+        
+        // what is the point of setting scaleX?
         bird->setScaleX(-1.0f);
     }
     else if(bird_velocity.x > 30.0f && !birdLookingRight)
@@ -96,8 +109,11 @@ void GameLayer::update(float dt)
     bird_position.y += bird_velocity.y * dt;
     
     CCSprite* bonus = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kBonusStartTag + currentBonusType));
+    
+    // check if the bonus node is visible
     if(bonus->isVisible())
     {
+        // check if the bird and the bonus are colliding, if so, give the bird the bonus
         CCPoint bonus_position = bonus->getPosition();
         float range = 20.0f;
         if(bird_position.x > bonus_position.x - range &&
@@ -127,9 +143,14 @@ void GameLayer::update(float dt)
             
             CCScaleTo* action1 = CCScaleTo::create(0.2f, 1.5f, 0.8f);
             CCScaleTo* action2 = CCScaleTo::create(0.2f, 1.0f, 1.0f);
+            
+            // What are CCScaleTo and CCSequence.. what do these actions do?
             CCSequence* action3 = CCSequence::create(action1, action2, action1, action2, action1, action2, NULL);
             scoreLabel->runAction(action3);
+
+            // what does resetBonus do?
             _resetBonus();
+            
             _superJump();
             
         }
@@ -138,6 +159,7 @@ void GameLayer::update(float dt)
     int cloudTag;
     int platformTag;
     
+    // bird collisions with platforms are detected only when the bird is falling down
     if(bird_velocity.y < 0)
     {
         for(platformTag = kPlatformsStartTag; platformTag < kPlatformsStartTag + K_NUM_PLATFORMS; platformTag++)
@@ -150,11 +172,14 @@ void GameLayer::update(float dt)
             min_x = platform_position.x + platform_size.width * 0.5f + 10;
             float min_y = platform_position.y + (platform_size.height + bird_size.height) * 0.5f - K_PLATFORM_TOP_PADDING;
             
+            // check if the bird and the platform is colliding, if so, make the bird jump
             if(bird_position.x > max_x && bird_position.x < min_x &&
                bird_position.y > platform_position.y && bird_position.y < min_y)
                 _jump();
         }
         
+        // Assuming that the game is not endless.. when the bird reaches the very top, call the game done and
+        // show the high score screen
         if(bird_position.y < - bird_size.height)
             _showHighScores();
         
@@ -171,6 +196,8 @@ void GameLayer::update(float dt)
             CCPoint position = cloud->getPosition();
             position.y -= delta * cloud->getScaleY() * 0.8f;
             
+            // assuming that the clouds in the background, when they have scrolled off the screen
+            // reset them so that they will scroll in from the bottom
             if(position.y < -cloud->getContentSize().height * 0.5f)
             {
                 currentCloudTag = cloudTag;
@@ -198,6 +225,7 @@ void GameLayer::update(float dt)
             }
         }
         
+        // if the bonus was visible and is going to become invisible, reset it.
         if(bonus->isVisible())
         {
             CCPoint position = bonus->getPosition();
@@ -217,6 +245,8 @@ void GameLayer::update(float dt)
         CCLabelBMFont* scoreLabel = dynamic_cast<CCLabelBMFont*>(getChildByTag(kScoreLabel));
         scoreLabel->setString(scoreStr->getCString());
     }
+    
+    // draw the bird at its new position
     bird->setPosition(bird_position);
 }
 
@@ -303,6 +333,7 @@ void GameLayer::_resetPlatforms()
     gameSuspended = false;
 }
 
+// bird logic
 void GameLayer::_resetBird()
 {
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
@@ -350,16 +381,20 @@ void GameLayer::_startGame()
     _resetBonus();
 }
 
+// when the bird is jumping, this is  its velocity
 void GameLayer::_jump()
 {
     bird_velocity.y = 350.0f + fabsf(bird_velocity.x);
 }
 
+
+// on receving a boost, the bird jumps super high with a super velocity
 void GameLayer::_superJump()
 {
     bird_velocity.y = 1000.0f + fabsf(bird_velocity.x);
 }
 
+// Assuming that when the game gets over, the high scores need to be shown, so transition over to that
 void GameLayer::_showHighScores()
 {
     gameSuspended = true;
