@@ -39,7 +39,7 @@ void TweeJumpCocos2dx::SetWindow(CoreWindow^ window)
 {
     // Specify the orientation of your application here
     // The choices are DisplayOrientations::Portrait or DisplayOrientations::Landscape or DisplayOrientations::LandscapeFlipped
-	DisplayProperties::AutoRotationPreferences = DisplayOrientations::Landscape;
+    DisplayProperties::AutoRotationPreferences = DisplayOrientations::Portrait;
 
 	window->VisibilityChanged +=
 		ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &TweeJumpCocos2dx::OnVisibilityChanged);

@@ -8,9 +8,6 @@
     <Filter Include="Classes">
       <UniqueIdentifier>{75a4d4c5-4978-4bf9-a391-fbbd7b2d35b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Classes\ClickAndMoveTest">
-      <UniqueIdentifier>{c4067854-d06e-431d-b750-d76dab15655d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\ApplicationIcon.png">
@@ -34,29 +31,56 @@
     <Image Include="Assets\Tiles\IconicTileSmall.png">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="..\Resources\Images\changePlayerButton.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\Resources\Images\playAgainButton.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\Resources\Images\sprites.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="..\Resources\Fonts\bitmapFont.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TweeJumpCocos2dx.cpp" />
+    <ClCompile Include="pch.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+    <ClCompile Include="..\Classes\GameLayer.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\Classes\HighScoreLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MainLayer.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TweeJumpCocos2dx.h" />
-    <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
+    <ClInclude Include="pch.h" />
     <ClInclude Include="..\Classes\AppMacros.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
+    <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\Classes\GameConfig.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GameLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\HighScoreLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MainLayer.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="WMAppManifest.xml" />
@@ -74,5 +98,8 @@
     <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\x86\libGLESv2_phone.dll" />
     <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libEGL_phone.dll" />
     <None Include="..\..\..\cocos2dx\platform\third_party\wp8\libraries\arm\libGLESv2_phone.dll" />
+    <None Include="..\Resources\Fonts\bitmapFont.fnt">
+      <Filter>Assets</Filter>
+    </None>
   </ItemGroup>
 </Project>

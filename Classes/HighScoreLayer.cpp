@@ -37,14 +37,14 @@ void HighScoreLayer::_popUpPlayer()
     
     //
     
-    CCMenuItemLabel* save = CCMenuItemLabel::create(CCLabelTTF::create("Save", "Arial", 20), this, menu_selector(HighScoreLayer::_changePlayerDone));
-    save->setPosition(ccp(50, 50));
+    //CCMenuItemLabel* save = CCMenuItemLabel::create(CCLabelTTF::create("Save", "Arial", 20), this, menu_selector(HighScoreLayer::_changePlayerDone));
+    //save->setPosition(ccp(50, 50));
+    //
+    //CCMenuItemLabel* cancel = CCMenuItemLabel::create(CCLabelTTF::create("Cancel", "Arial", 20), this, menu_selector(HighScoreLayer::_cancelPopupPlayer));
+    //cancel->setPosition(ccp(200, 50));
     
-    CCMenuItemLabel* cancel = CCMenuItemLabel::create(CCLabelTTF::create("Cancel", "Arial", 20), this, menu_selector(HighScoreLayer::_cancelPopupPlayer));
-    cancel->setPosition(ccp(200, 50));
-    
-    CCMenu* menu = CCMenu::create(save, cancel, NULL);
-    menu->setPosition(ccp(0, 0));
+    //CCMenu* menu = CCMenu::create(save, cancel, NULL);
+    //menu->setPosition(ccp(0, 0));
     
     //
     
@@ -60,7 +60,7 @@ void HighScoreLayer::_popUpPlayer()
     //
     
     _playerPopup->addChild(title);
-    _playerPopup->addChild(menu, 100, kPopUpPlayerTag);
+    //_playerPopup->addChild(menu, 100, kPopUpPlayerTag);
     _playerPopup->addChild(playerName, 150, kPopUpEditBoxTag);
     
     _playerPopup->setVisible(false);
