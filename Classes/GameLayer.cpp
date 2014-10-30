@@ -36,6 +36,7 @@ GameLayer::GameLayer()
 {
     gameSuspended = true;
     isGameOver = false;
+    fuelInTank = 3600; // one minute worth
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
     
     // Initialize all the platforms. Really? They predraw all the platforms??
@@ -50,6 +51,27 @@ GameLayer::GameLayer()
     exit->setTag(kExit);
     exit->setVisible(false);
     addChild(exit);
+    
+    CCSize landscapeSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCSize visibleSize = CCSize(landscapeSize.width, landscapeSize.height);
+    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+    
+    pHealthSprite = CCSprite::create("health_bar.png");
+    //pHealthSprite->setPosition(ccp(origin.x + 10, visibleSize.height - 20));
+    pHealthSprite->setAnchorPoint(ccp(0.0, 0.0));
+    //pHealthSprite->setScaleY(0.02);
+    
+    //pHealthSprite->setScaleX(100);
+    
+    
+    pHealthBar = CCProgressTimer::create(pHealthSprite);
+    pHealthBar->setScale(0.5, 0.5);
+    pHealthBar->setType(kCCProgressTimerTypeBar);
+    //pHealthBar->setMidpoint(ccp(0,0));
+    pHealthBar->setBarChangeRate(ccp(1,0));
+    pHealthBar->setPercentage(100);
+    pHealthBar->setPosition(ccp(origin.x+10, visibleSize.height - 20));
+    this->addChild(pHealthBar);
     
     CCSprite* bonus;
     
@@ -118,6 +140,19 @@ void GameLayer::update(float dt)
     bird_position.y += bird_velocity.y * dt;
     
   
+    // TODO: (fix this hack) - just set it so that every 20 frames, we decrease the percentage by 1
+    // when the percentage goes below zero, the healthbar is finished and finish the game
+    // We should show some animation that the health is over.
+    fuelInTank--;
+    if (fuelInTank%20 == 0)
+    {
+        pHealthBar->setPercentage(pHealthBar->getPercentage()-1.0);
+        if (pHealthBar->getPercentage() <= 0)
+        {
+            _showHighScores();
+        }
+    }
+    
     
     CCSprite* bonus = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kBonusStartTag + currentBonusType));
     
@@ -132,6 +167,7 @@ void GameLayer::update(float dt)
            bird_position.y > bonus_position.y - range &&
            bird_position.y < bonus_position.y + range)
         {
+            // TODO: Our bonuses should be more rocket fuel or additional lives
             switch(currentBonusType)
             {
                 case kBonus5:
@@ -155,7 +191,8 @@ void GameLayer::update(float dt)
             CCScaleTo* action1 = CCScaleTo::create(0.2f, 1.5f, 0.8f);
             CCScaleTo* action2 = CCScaleTo::create(0.2f, 1.0f, 1.0f);
             
-            // What are CCScaleTo and CCSequence.. what do these actions do? Likely, this just makes the bird move up very fast
+            // What are CCScaleTo and CCSequence.. what do these actions do?
+            // Likely, this just makes the bird move up very fast without it having to collide with anything
             CCSequence* action3 = CCSequence::create(action1, action2, action1, action2, action1, action2, NULL);
             scoreLabel->runAction(action3);
 
@@ -166,9 +203,6 @@ void GameLayer::update(float dt)
             
         }
     }
-    
-    // TODO: check if the Exit node is visible, if so reposition it every jump
-    // TODO: If the character collides with the Exit, finish the game as a success
     
     int cloudTag;
     int platformTag;
@@ -260,7 +294,15 @@ void GameLayer::update(float dt)
             }
             
             position.y -= delta;
-            exit->cocos2d::CCNode::setPosition(position);
+            if(position.y < -exit->getContentSize().height*0.5)
+            {
+              // the exit just passed out of the screen... you should show a "Game Over... you lose" kind of thing here
+               // TODO: show an animation or something like... you lose!!
+                _showHighScores();
+            }
+            
+            exit->setPosition(position);
+            
         }
         
         // if the bonus was visible and is going to become invisible, reset it.
