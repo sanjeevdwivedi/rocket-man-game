@@ -162,7 +162,6 @@
     <ClInclude Include="..\..\..\Classes\AppMacros.h" />
     <ClInclude Include="..\..\..\Classes\GameConfig.h" />
     <ClInclude Include="..\..\..\Classes\GameLayer.h" />
-    <ClInclude Include="..\..\..\Classes\HelloWorldScene.h" />
     <ClInclude Include="..\..\..\Classes\HighScoreLayer.h" />
     <ClInclude Include="..\..\..\Classes\MainLayer.h" />
     <ClInclude Include="pch.h" />
@@ -180,12 +179,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\..\Classes\GameLayer.cpp" />
-    <ClCompile Include="..\..\..\Classes\HelloWorldScene.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="..\..\..\Classes\HighScoreLayer.cpp" />
     <ClCompile Include="..\..\..\Classes\MainLayer.cpp" />
     <ClCompile Include="pch.cpp">
