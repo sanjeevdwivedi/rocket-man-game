@@ -246,6 +246,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
+		AF6278661A01DA2000D01C01 /* exit_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = AF6278651A01DA2000D01C01 /* exit_arrow.png */; };
 		AFE8CCC019FDB6FE00CF94D9 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = AFE8CCB019FDB6FE00CF94D9 /* Default.png */; };
 		AFE8CCC119FDB6FE00CF94D9 /* bitmapFont.fnt in Resources */ = {isa = PBXBuildFile; fileRef = AFE8CCB219FDB6FE00CF94D9 /* bitmapFont.fnt */; };
 		AFE8CCC219FDB6FE00CF94D9 /* bitmapFont.png in Resources */ = {isa = PBXBuildFile; fileRef = AFE8CCB319FDB6FE00CF94D9 /* bitmapFont.png */; };
@@ -795,6 +796,7 @@
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		37C62C0718E156AE00D16FC4 /* ExtensionExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionExport.h; sourceTree = "<group>"; };
 		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
+		AF6278651A01DA2000D01C01 /* exit_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exit_arrow.png; sourceTree = "<group>"; };
 		AFE8CCB019FDB6FE00CF94D9 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		AFE8CCB219FDB6FE00CF94D9 /* bitmapFont.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bitmapFont.fnt; sourceTree = "<group>"; };
 		AFE8CCB319FDB6FE00CF94D9 /* bitmapFont.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bitmapFont.png; sourceTree = "<group>"; };
@@ -2011,6 +2013,7 @@
 		AFE8CCBA19FDB6FE00CF94D9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				AF6278651A01DA2000D01C01 /* exit_arrow.png */,
 				AFE8CCBB19FDB6FE00CF94D9 /* changePlayerButton.png */,
 				AFE8CCBC19FDB6FE00CF94D9 /* playAgainButton.png */,
 				AFE8CCBD19FDB6FE00CF94D9 /* sprites.png */,
@@ -2045,7 +2048,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0610;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "TweeJumpCocos2dx" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2088,6 +2091,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7855E0E1153FEF240059DD9A /* Default.png in Resources */,
+				AF6278661A01DA2000D01C01 /* exit_arrow.png in Resources */,
 				AFE8CCC219FDB6FE00CF94D9 /* bitmapFont.png in Resources */,
 				D4EF949A15BD2D8B00D803EB /* Icon-57.png in Resources */,
 				AFE8CCCD19FDB6FE00CF94D9 /* iTunesArtwork in Resources */,
@@ -2468,11 +2472,11 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv6 armv7 i386";
 			};
@@ -2481,7 +2485,6 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

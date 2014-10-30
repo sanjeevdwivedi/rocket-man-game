@@ -27,6 +27,7 @@ private:
     
     bool gameSuspended;
     bool birdLookingRight;
+    bool isGameOver;
     
     int score;
     int platformCount;

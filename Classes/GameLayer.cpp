@@ -35,6 +35,7 @@ void GameLayer::didAccelerate(CCAcceleration *pAccelerationValue)
 GameLayer::GameLayer()
 {
     gameSuspended = true;
+    isGameOver = false;
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
     
     // Initialize all the platforms. Really? They predraw all the platforms??
@@ -43,6 +44,12 @@ GameLayer::GameLayer()
     // We don't need a packed sprite, we can pick individual textures. Here we are getting the sprite for the bird
     CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 44, 32));
     batchNode->addChild(bird, 4, kBird);
+    
+    // add the exit arrow
+    CCSprite* exit = CCSprite::create("exit_arrow.png");
+    exit->setTag(kExit);
+    exit->setVisible(false);
+    addChild(exit);
     
     CCSprite* bonus;
     
@@ -53,6 +60,8 @@ GameLayer::GameLayer()
         batchNode->addChild(bonus, 4, kBonusStartTag + i);
         bonus->setVisible(false);
     }
+    
+    // TODO: read the sprite for the Exit door - add the tag "Exit to it"
     
     CCLabelBMFont* scoreLabel = CCLabelBMFont::create("0", "bitmapFont.fnt");
     addChild(scoreLabel, 5, kScoreLabel);
@@ -108,6 +117,8 @@ void GameLayer::update(float dt)
     bird_velocity.y += bird_acceleration.y * dt;
     bird_position.y += bird_velocity.y * dt;
     
+  
+    
     CCSprite* bonus = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kBonusStartTag + currentBonusType));
     
     // check if the bonus node is visible
@@ -144,7 +155,7 @@ void GameLayer::update(float dt)
             CCScaleTo* action1 = CCScaleTo::create(0.2f, 1.5f, 0.8f);
             CCScaleTo* action2 = CCScaleTo::create(0.2f, 1.0f, 1.0f);
             
-            // What are CCScaleTo and CCSequence.. what do these actions do?
+            // What are CCScaleTo and CCSequence.. what do these actions do? Likely, this just makes the bird move up very fast
             CCSequence* action3 = CCSequence::create(action1, action2, action1, action2, action1, action2, NULL);
             scoreLabel->runAction(action3);
 
@@ -155,6 +166,9 @@ void GameLayer::update(float dt)
             
         }
     }
+    
+    // TODO: check if the Exit node is visible, if so reposition it every jump
+    // TODO: If the character collides with the Exit, finish the game as a success
     
     int cloudTag;
     int platformTag;
@@ -178,7 +192,7 @@ void GameLayer::update(float dt)
                 _jump();
         }
         
-        // Assuming that the game is not endless.. when the bird reaches the very top, call the game done and
+        // The game is endless in the original version.. when the bird falls down and is longer on the screen, call the game done and
         // show the high score screen
         if(bird_position.y < - bird_size.height)
             _showHighScores();
@@ -209,11 +223,14 @@ void GameLayer::update(float dt)
             }
         }
         
+
         for(platformTag = kPlatformsStartTag; platformTag < kPlatformsStartTag + K_NUM_PLATFORMS; platformTag++)
         {
             CCSprite* platform = dynamic_cast<CCSprite*>(batchNode->getChildByTag(platformTag));
             CCPoint position = platform->getPosition();
             position = ccp(position.x, position.y - delta);
+            
+            // If the platform just became invisible, reset it to just above the screen
             if(position.y < -platform->getContentSize().height * 0.5f)
             {
                 currentPlatformTag = platformTag;
@@ -221,8 +238,29 @@ void GameLayer::update(float dt)
             }
             else
             {
+                // If the platform is still visible, decrease its Y coordinates so it looks like the scene is scrolling
                 platform->setPosition(position);
             }
+        }
+
+        
+        CCSprite* exit = dynamic_cast<CCSprite*>(getChildByTag(kExit));
+        if(exit->isVisible())
+        {
+            CCPoint position = exit->getPosition();
+            // check if the bird and the exit are colliding, if so, finish the game
+            float range = 20.0f;
+            if(bird_position.x > position.x - range &&
+               bird_position.x < position.x + range &&
+               bird_position.y > position.y - range &&
+               bird_position.y < position.y + range)
+            {
+                // TODO: (would be nice to show an animation when exiting)
+                _showHighScores();
+            }
+            
+            position.y -= delta;
+            exit->cocos2d::CCNode::setPosition(position);
         }
         
         // if the bonus was visible and is going to become invisible, reset it.
@@ -279,6 +317,11 @@ void GameLayer::_initPlatforms()
 
 void GameLayer::_resetPlatform()
 {
+    if(platformCount >= K_MAX_PLATFORMS_IN_GAME) {
+    
+        isGameOver = true;
+    }
+    
     if(currentPlatformY < 0)
         currentPlatformY = 30.0f;
     else
@@ -306,13 +349,21 @@ void GameLayer::_resetPlatform()
     platform->setPosition(ccp(x, currentPlatformY));
     platformCount++;
     
-    if(platformCount == currentBonusPlatformIndex)
+    if(platformCount == currentBonusPlatformIndex && platformCount != K_MAX_PLATFORMS_IN_GAME)
     {
         CCSprite* bonus = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kBonusStartTag + currentBonusType));
         bonus->setPosition(ccp(x, currentPlatformY + 30));
         bonus->setVisible(true);
     }
     
+    // TODO: If the platform count reaches K_MAX_PLATFORMS, Add the "Exit" icon onto the platform.
+    if (platformCount == K_MAX_PLATFORMS_IN_GAME)
+    {
+        // Add the "Exit" icon onto the platform.
+        CCSprite* exit = dynamic_cast<CCSprite*>(getChildByTag(kExit));
+        exit->setPosition(ccp(x, currentPlatformY + 48));
+        exit->setVisible(true);
+    }
 }
 
 void GameLayer::_resetPlatforms()
