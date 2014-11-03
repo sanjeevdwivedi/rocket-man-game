@@ -201,18 +201,17 @@ void HighScoreLayer::_updateHighScores()
         
         if(currentScorePosition >= 0)
         {
-            unsigned int i;
             highscores = defaults->getStringForKey("highscores", "");
             vectorScores = split(highscores, "\n");
             CCString* dataScore = CCString::createWithFormat("%s;%d", currentPlayer.c_str(), currentScore);
 
             string tmpScore = "";
-            for(i = vectorScores.size() - 2; i > currentScorePosition; i--)
+            for (int i = vectorScores.size() - 2; i > currentScorePosition; i--)
                 vectorScores[i + 1] = vectorScores[i];
 
             vectorScores[currentScorePosition] = string(dataScore->getCString());
             string scores = "";
-            for(i = 0; i < vectorScores.size(); i++)
+            for(unsigned int i = 0; i < vectorScores.size(); i++)
                 scores += vectorScores[i]+"\n";
             
             defaults->setStringForKey("highscores", scores);
