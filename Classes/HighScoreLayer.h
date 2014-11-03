@@ -31,7 +31,7 @@ private:
     void _updateHighScores();
     void _saveCurrentPlayer();
 
-#ifdef WP8
+#if defined(WP8) || defined(WINRT)
     void _changePlayerDone(CCObject* pObject);
     void _cancelPopupPlayer(CCObject* pObject);
 #else

@@ -91,7 +91,7 @@ HighScoreLayer::HighScoreLayer(int lastScore) : currentScore(lastScore)
     vector<string> vectorScores = split(highscores, "\n");
     if(vectorScores.size() > 0)
     {
-        for(int i = 0; i < vectorScores.size(); i++)
+        for(unsigned int i = 0; i < vectorScores.size(); i++)
         {
             vector<string> data = split(vectorScores[i], ";");
             if(data.size() > 0)
@@ -183,7 +183,7 @@ void HighScoreLayer::_updateHighScores()
         vector<string> vectorScores = split(highscores, "\n");
         if(vectorScores.size() > 0)
         {
-            for(int i = 0; i < vectorScores.size(); i++)
+            for (unsigned int i = 0; i < vectorScores.size(); i++)
             {
                 vector<string> data = split(vectorScores[i], ";");
                 if(data.size() > 0)
@@ -201,7 +201,7 @@ void HighScoreLayer::_updateHighScores()
         
         if(currentScorePosition >= 0)
         {
-            int i;
+            unsigned int i;
             highscores = defaults->getStringForKey("highscores", "");
             vectorScores = split(highscores, "\n");
             CCString* dataScore = CCString::createWithFormat("%s;%d", currentPlayer.c_str(), currentScore);
@@ -256,7 +256,7 @@ void HighScoreLayer::draw()
     ccDrawSolidRect(ccp(x,y), ccp(x+width, y+height), ccc4f(1.0f, 0.0f, 0.0f, 0.4f));
 }
 
-#ifdef WP8
+#if defined(WP8) || defined(WINRT)
 void HighScoreLayer::_changePlayerDone(CCObject* pObject)
 #else
 void HighScoreLayer::_changePlayerDone()
@@ -272,7 +272,7 @@ void HighScoreLayer::_changePlayerDone()
     
 }
 
-#ifdef WP8
+#if defined(WP8) || defined(WINRT)
 void HighScoreLayer::_cancelPopupPlayer(CCObject* pObject)
 #else
 void HighScoreLayer::_cancelPopupPlayer()
