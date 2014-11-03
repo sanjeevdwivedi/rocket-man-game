@@ -30,7 +30,7 @@ ipch/
 [Dd]ebug*/
 [Rr]elease*/
 Ankh.NoLoad
-
+Generated Files/
 #MonoDevelop
 *.pidb
 *.userprefs
