@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TweeJumpCocos2dx", "TweeJumpCocos2dx.vcxproj", "{A4BD3C33-E173-4233-B52B-C5BFD57144C8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RocketMan", "RocketMan.vcxproj", "{A4BD3C33-E173-4233-B52B-C5BFD57144C8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libcocos2d", "..\..\..\cocos2dx\proj.winrt\cocos2d.vcxproj", "{12155DB2-C528-4C56-8292-5E87FC315769}"
 EndProject

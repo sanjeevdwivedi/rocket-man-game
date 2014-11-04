@@ -35,7 +35,7 @@ THE SOFTWARE.
 
 USING_NS_CC;
 
-using namespace TweeJumpCocos2dx;
+using namespace RocketMan;
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -52,7 +52,7 @@ MainPage::MainPage()
 
     CCEGLView* eglView = new CCEGLView();
 	eglView->Create(Window::Current->CoreWindow, SwapChainPanel);
-    eglView->setViewName("TweeJumpCocos2dx");
+    eglView->setViewName("RocketMan");
     CCApplication::sharedApplication()->run();
 }
 

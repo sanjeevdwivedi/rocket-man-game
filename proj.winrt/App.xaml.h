@@ -32,7 +32,7 @@ THE SOFTWARE.
 #include "App.g.h"
 #include "MainPage.xaml.h"
 
-namespace TweeJumpCocos2dx
+namespace RocketMan
 {
 	/// <summary>
 	/// Provides application-specific behavior to supplement the default Application class.

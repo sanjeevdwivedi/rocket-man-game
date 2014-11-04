@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include "pch.h"
 #include "MainPage.xaml.h"
 
-using namespace TweeJumpCocos2dx;
+using namespace RocketMan;
 
 using namespace Platform;
 using namespace Windows::ApplicationModel;
