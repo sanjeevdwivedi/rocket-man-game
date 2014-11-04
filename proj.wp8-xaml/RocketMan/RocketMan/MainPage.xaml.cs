@@ -24,6 +24,7 @@ using Microsoft.Phone.Shell;
 using Windows.UI.Input;
 using System.Windows.Threading;
 using Microsoft.Phone.Info;
+using Windows.Graphics.Display;
 
 namespace PhoneDirect3DXamlAppInterop
 {
@@ -64,6 +65,9 @@ namespace PhoneDirect3DXamlAppInterop
                 // Hook-up native component to DrawingSurfaceBackgroundGrid
                 DrawingSurfaceBackground.SetBackgroundContentProvider(m_d3dInterop.CreateContentProvider());
                 DrawingSurfaceBackground.SetBackgroundManipulationHandler(m_d3dInterop);
+
+                // Set the preferred device orientation
+                m_d3dInterop.WindowOrientation = DisplayOrientations.Portrait;
 
                 // Hook-up Cocos2d-x delegates
                 m_d3dInterop.SetCocos2dEventDelegate(OnCocos2dEvent);
