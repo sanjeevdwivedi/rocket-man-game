@@ -2,7 +2,7 @@
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
   <Identity Name="16A6CBD7-44EF-4BD8-8ED6-D6D037B23B93" Publisher="CN=dalestam" Version="2.2.0.0" />
   <Properties>
-    <DisplayName>RocketMan-WinRT</DisplayName>
+    <DisplayName>RocketMan</DisplayName>
     <PublisherDisplayName>dalestam</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="TestCpp.App">
-      <VisualElements DisplayName="RocketMan-WinRT" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="TestCpp" ForegroundText="light" BackgroundColor="#464646">
+      <VisualElements DisplayName="RocketMan" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="TestCpp" ForegroundText="light" BackgroundColor="#464646">
         <DefaultTile ShowName="allLogos" WideLogo="Assets\WideLogo.png" />
         <SplashScreen Image="Assets\SplashScreen.png" />
         <InitialRotationPreference>

@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="TestCpp.App">
-      <m2:VisualElements DisplayName="TestCpp" Description="TestCpp" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
+      <m2:VisualElements DisplayName="RocketMan" Description="TestCpp" BackgroundColor="#464646" ForegroundText="light" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png">
         <m2:DefaultTile Wide310x150Logo="Assets\WideLogo.png">
           <m2:ShowNameOnTiles>
             <m2:ShowOn Tile="square150x150Logo" />
