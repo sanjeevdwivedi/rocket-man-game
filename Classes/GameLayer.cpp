@@ -8,6 +8,7 @@
 
 #include "GameLayer.h"
 #include "HighScoreLayer.h"
+#include "SimpleAudioEngine.h"
 
 using namespace cocos2d;
 
@@ -477,6 +478,9 @@ void GameLayer::_startGame()
 // when the bird is jumping, this is  its velocity
 void GameLayer::_jump()
 {
+    // play sound effect when player jumps
+    //CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sounds/jump.wav");
+
     bird_velocity.y = 350.0f + fabsf(bird_velocity.x);
 }
 
