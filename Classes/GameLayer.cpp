@@ -43,7 +43,9 @@ GameLayer::GameLayer()
     _initPlatforms();
     
     // We don't need a packed sprite, we can pick individual textures. Here we are getting the sprite for the bird
-    CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 44, 32));
+    //CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 44, 32));
+	//EMchange: the size of the sprite, 50*60
+	CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 50, 60));
     batchNode->addChild(bird, 4, kBird);
     
     // add the exit arrow
@@ -336,10 +338,14 @@ void GameLayer::_initPlatform()
     switch((int)CCRANDOM_0_1() * 2)
     {
         case 0:
-            rect = CCRectMake(608, 64, 102, 36);
+            //rect = CCRectMake(608, 64, 102, 36);
+			//EMChange: change the size and position of the beam
+			rect = CCRectMake(608, 90, 102, 22);
             break;
         case 1:
-            rect = CCRectMake(608, 128, 90, 32);
+            //rect = CCRectMake(608, 128, 90, 32);
+			//EMChange: change the size and position of the sprite
+			rect = CCRectMake(608, 140, 102, 22);
             break;
     }
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));

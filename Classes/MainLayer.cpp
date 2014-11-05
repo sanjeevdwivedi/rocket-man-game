@@ -21,7 +21,7 @@ MainLayer::MainLayer()
     CCSprite* background = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
     batchNode->addChild(background);
     background->setPosition(ccp(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f));
-    
+    //EM Change: the sprite for cloud are now empty = transparent... no more clouds!
     initClouds();
 }
 
