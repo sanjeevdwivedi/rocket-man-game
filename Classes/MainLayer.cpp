@@ -22,9 +22,10 @@ MainLayer::MainLayer()
     batchNode->addChild(background);
     background->setPosition(ccp(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f));
     //EM Change: the sprite for cloud are now empty = transparent... no more clouds!
-    initClouds();
+    //initClouds();
 }
 
+/*
 void MainLayer::initClouds()
 {
     currentCloudTag = kCloudsStartTag;
@@ -100,10 +101,11 @@ void MainLayer::resetCloud()
     
     
 }
+*/
 
 void MainLayer::update(float dt)
 {
-    CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
+    /*CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
     for(int cloudTag = kCloudsStartTag; cloudTag < kCloudsStartTag + K_NUM_CLOUDS; cloudTag++)
     {
         CCSprite* cloud = dynamic_cast<CCSprite*>(batchNode->getChildByTag(cloudTag));
@@ -115,7 +117,7 @@ void MainLayer::update(float dt)
             position.x = -size.width * 0.5f;
         cloud->setPosition(position);
 
-    }
+    }*/
     
 }
 

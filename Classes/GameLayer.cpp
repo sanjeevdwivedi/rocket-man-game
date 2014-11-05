@@ -240,24 +240,24 @@ void GameLayer::update(float dt)
         bird_position.y = SCREEN_HEIGHT * 0.5f;
         currentPlatformY -= delta;
         
-        for(cloudTag = kCloudsStartTag; cloudTag < kCloudsStartTag + K_NUM_CLOUDS; cloudTag++)
-        {
-            CCSprite* cloud = dynamic_cast<CCSprite*>(batchNode->getChildByTag(cloudTag));
-            CCPoint position = cloud->getPosition();
-            position.y -= delta * cloud->getScaleY() * 0.8f;
-            
-            // assuming that the clouds in the background, when they have scrolled off the screen
-            // reset them so that they will scroll in from the bottom
-            if(position.y < -cloud->getContentSize().height * 0.5f)
-            {
-                currentCloudTag = cloudTag;
-                resetCloud();
-            }
-            else
-            {
-                cloud->setPosition(position);
-            }
-        }
+        //for(cloudTag = kCloudsStartTag; cloudTag < kCloudsStartTag + K_NUM_CLOUDS; cloudTag++)
+        //{
+        //    CCSprite* cloud = dynamic_cast<CCSprite*>(batchNode->getChildByTag(cloudTag));
+        //    CCPoint position = cloud->getPosition();
+        //    position.y -= delta * cloud->getScaleY() * 0.8f;
+        //    
+        //    // assuming that the clouds in the background, when they have scrolled off the screen
+        //    // reset them so that they will scroll in from the bottom
+        //    if(position.y < -cloud->getContentSize().height * 0.5f)
+        //    {
+        //        currentCloudTag = cloudTag;
+        //        resetCloud();
+        //    }
+        //    else
+        //    {
+        //        cloud->setPosition(position);
+        //    }
+        //}
         
 
         for(platformTag = kPlatformsStartTag; platformTag < kPlatformsStartTag + K_NUM_PLATFORMS; platformTag++)
@@ -474,7 +474,7 @@ void GameLayer::_resetBonus()
 void GameLayer::_startGame()
 {
     score = 0;
-    resetClouds();
+    //resetClouds();
     _resetPlatforms();
     _resetBird();
     _resetBonus();
