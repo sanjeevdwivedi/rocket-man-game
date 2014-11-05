@@ -10,6 +10,15 @@
 
 using namespace cocos2d;
 
+CCScene* MainLayer::scene()
+{
+    CCScene* scene = CCScene::create();
+    MainLayer* layer = new MainLayer();
+    scene->addChild(layer);
+    layer->autorelease();
+    return scene;
+}
+
 MainLayer::MainLayer()
 {
     RANDOM_SEED();
