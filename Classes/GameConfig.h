@@ -30,6 +30,8 @@
 #define K_MIN_BONUS_STEP 30
 #define K_MAX_BONUS_STEP 50
 
+#define K_PLAY_BACKGROUND_MUSIC 1
+#define K_PLAY_SOUND_EFFECTS 1
 
 
 enum {

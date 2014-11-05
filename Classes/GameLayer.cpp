@@ -98,7 +98,7 @@ GameLayer::GameLayer()
     
     setAccelerometerEnabled(true);
  
-#if 0
+#if K_PLAY_BACKGROUND_MUSIC
     // play and loop background music during game
     auto soundEngine = CocosDenshion::SimpleAudioEngine::sharedEngine();
     soundEngine->playBackgroundMusic("Sounds/background.wav", true);
@@ -492,7 +492,7 @@ void GameLayer::_startGame()
 void GameLayer::_jump()
 {
     // play sound effect when player jumps
-#if 0
+#if K_PLAY_SOUND_EFFECTS
     CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sounds/jump.wav");
 #endif
     bird_velocity.y = 350.0f + fabsf(bird_velocity.x);
