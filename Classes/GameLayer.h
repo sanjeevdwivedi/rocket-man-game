@@ -15,6 +15,8 @@ class GameLayer : public MainLayer
 {
 public:
     GameLayer();
+    virtual ~GameLayer();
+
     void update(float dt);
     static cocos2d::CCScene* scene();
     
