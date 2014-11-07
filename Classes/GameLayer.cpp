@@ -46,8 +46,9 @@ GameLayer::GameLayer()
     //CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 44, 32));
 	//EMchange: the size of the sprite, 50*60
 	CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 50, 60));
+	//CCSprite* bird2 = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(656, 315, 55, 70));
     batchNode->addChild(bird, 4, kBird);
-    
+	    
     // add the exit arrow
     CCSprite* exit = CCSprite::create("exit_arrow.png");
     exit->setTag(kExit);
@@ -111,7 +112,11 @@ void GameLayer::update(float dt)
     
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
     CCSprite* bird = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kBird));
+	
     
+	
+
+
     bird_position.x += bird_velocity.x * dt;
     // birdLookingRight/Left is used to flip the bird in the right direction i.e. direction of the velocity
     // so the bird does not travel backwards
@@ -121,11 +126,14 @@ void GameLayer::update(float dt)
         
         // what is the point of setting scaleX?
         bird->setScaleX(-1.0f);
+		
+
     }
     else if(bird_velocity.x > 30.0f && !birdLookingRight)
     {
         birdLookingRight = true;
         bird->setScaleX(1.0f);
+	
     }
     
     CCSize bird_size = bird->getContentSize();
