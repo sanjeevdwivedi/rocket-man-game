@@ -335,7 +335,7 @@ void GameLayer::update(float dt)
 void GameLayer::_initPlatform()
 {
     CCRect rect;
-    switch((int)CCRANDOM_0_1() * 2)
+    switch((int)(CCRANDOM_0_1() *2))
     {
         case 0:
             //rect = CCRectMake(608, 64, 102, 36);
@@ -347,6 +347,9 @@ void GameLayer::_initPlatform()
 			//EMChange: change the size and position of the sprite
 			rect = CCRectMake(608, 140, 102, 22);
             break;
+
+		default:
+			return;
     }
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
     CCSprite* platform = CCSprite::createWithTexture(batchNode->getTexture(), rect);
