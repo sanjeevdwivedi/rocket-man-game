@@ -37,7 +37,7 @@
 
 enum {
     kSpriteManager = 0,
-    kBird,
+    kRocketMan,
     kScoreLabel,
     kExit,
     kCloudsStartTag = 1000,

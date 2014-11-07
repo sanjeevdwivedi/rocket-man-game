@@ -26,9 +26,9 @@ void GameLayer::didAccelerate(CCAcceleration *pAccelerationValue)
     if(gameSuspended)
         return;
     
-    // the bird's acceleration, left and right
+    // RocketMan's acceleration, left and right
     float accel_filter = 0.1f;
-    bird_velocity.x = bird_velocity.x * accel_filter + pAccelerationValue->x * (1.0f - accel_filter) * 500.0f;
+    rm_velocity.x = rm_velocity.x * accel_filter + pAccelerationValue->x * (1.0f - accel_filter) * 500.0f;
 }
 
 // TODO: Does the game create all the levels in the beginning itself?
@@ -43,11 +43,11 @@ GameLayer::GameLayer()
     // Initialize all the platforms. Really? They predraw all the platforms??
     _initPlatforms();
     
-    // We don't need a packed sprite, we can pick individual textures. Here we are getting the sprite for the bird
+    // We don't need a packed sprite, we can pick individual textures. Here we are getting the sprite for RocketMan
     //CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 44, 32));
 	//EMchange: the size of the sprite, 50*60
-	CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 50, 60));
-    batchNode->addChild(bird, 4, kBird);
+	CCSprite* rocketman = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 50, 60));
+    batchNode->addChild(rocketman, 4, kRocketMan);
     
     // add the exit arrow
     CCSprite* exit = CCSprite::create("exit_arrow.png");
@@ -124,36 +124,36 @@ void GameLayer::update(float dt)
     MainLayer::update(dt);
     
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
-    CCSprite* bird = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kBird));
+    CCSprite* rocketMan = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kRocketMan));
     
-    bird_position.x += bird_velocity.x * dt;
-    // birdLookingRight/Left is used to flip the bird in the right direction i.e. direction of the velocity
-    // so the bird does not travel backwards
-    if(bird_velocity.x < -30.0f && birdLookingRight)
+    rm_position.x += rm_velocity.x * dt;
+    // rm_lookingRight/Left is used to flip RocketMan in the right direction i.e. direction of the velocity
+    // so RocketMan does not travel backwards
+    if(rm_velocity.x < -30.0f && rm_lookingRight)
     {
-        birdLookingRight = false;
+        rm_lookingRight = false;
         
         // what is the point of setting scaleX?
-        bird->setScaleX(-1.0f);
+        rocketMan->setScaleX(-1.0f);
     }
-    else if(bird_velocity.x > 30.0f && !birdLookingRight)
+    else if (rm_velocity.x > 30.0f && !rm_lookingRight)
     {
-        birdLookingRight = true;
-        bird->setScaleX(1.0f);
+        rm_lookingRight = true;
+        rocketMan->setScaleX(1.0f);
     }
     
-    CCSize bird_size = bird->getContentSize();
-    float max_x = SCREEN_WIDTH + bird_size.width * 0.5f;
-    float min_x = -bird_size.width * 0.5f;
+    CCSize rm_size = rocketMan->getContentSize();
+    float max_x = SCREEN_WIDTH + rm_size.width * 0.5f;
+    float min_x = -rm_size.width * 0.5f;
     
-    if(bird_position.x > max_x)
-        bird_position.x = min_x;
+    if(rm_position.x > max_x)
+        rm_position.x = min_x;
     
-    if(bird_position.x < min_x)
-        bird_position.x = max_x;
+    if(rm_position.x < min_x)
+        rm_position.x = max_x;
     
-    bird_velocity.y += bird_acceleration.y * dt;
-    bird_position.y += bird_velocity.y * dt;
+    rm_velocity.y += rm_acceleration.y * dt;
+    rm_position.y += rm_velocity.y * dt;
     
   
     // TODO: (fix this hack) - just set it so that every 20 frames, we decrease the percentage by 1
@@ -175,13 +175,13 @@ void GameLayer::update(float dt)
     // check if the bonus node is visible
     if(bonus->isVisible())
     {
-        // check if the bird and the bonus are colliding, if so, give the bird the bonus
+        // check if RocketMan and the bonus are colliding, if so, give RocketMan the bonus
         CCPoint bonus_position = bonus->getPosition();
         float range = 20.0f;
-        if(bird_position.x > bonus_position.x - range &&
-           bird_position.x < bonus_position.x + range &&
-           bird_position.y > bonus_position.y - range &&
-           bird_position.y < bonus_position.y + range)
+        if(rm_position.x > bonus_position.x - range &&
+           rm_position.x < bonus_position.x + range &&
+           rm_position.y > bonus_position.y - range &&
+           rm_position.y < bonus_position.y + range)
         {
             // TODO: Our bonuses should be more rocket fuel or additional lives
             switch(currentBonusType)
@@ -208,7 +208,7 @@ void GameLayer::update(float dt)
             CCScaleTo* action2 = CCScaleTo::create(0.2f, 1.0f, 1.0f);
             
             // What are CCScaleTo and CCSequence.. what do these actions do?
-            // Likely, this just makes the bird move up very fast without it having to collide with anything
+            // Likely, this just makes RocketMan move up very fast without it having to collide with anything
             CCSequence* action3 = CCSequence::create(action1, action2, action1, action2, action1, action2, NULL);
             scoreLabel->runAction(action3);
 
@@ -220,11 +220,10 @@ void GameLayer::update(float dt)
         }
     }
     
-    int cloudTag;
     int platformTag;
     
-    // bird collisions with platforms are detected only when the bird is falling down
-    if(bird_velocity.y < 0)
+    // RocketMan collisions with platforms are detected only when RocketMan is falling down
+    if(rm_velocity.y < 0)
     {
         for(platformTag = kPlatformsStartTag; platformTag < kPlatformsStartTag + K_NUM_PLATFORMS; platformTag++)
         {
@@ -234,24 +233,24 @@ void GameLayer::update(float dt)
             
             max_x = platform_position.x - platform_size.width * 0.5f - 10;
             min_x = platform_position.x + platform_size.width * 0.5f + 10;
-            float min_y = platform_position.y + (platform_size.height + bird_size.height) * 0.5f - K_PLATFORM_TOP_PADDING;
+            float min_y = platform_position.y + (platform_size.height + rm_size.height) * 0.5f - K_PLATFORM_TOP_PADDING;
             
-            // check if the bird and the platform is colliding, if so, make the bird jump
-            if(bird_position.x > max_x && bird_position.x < min_x &&
-               bird_position.y > platform_position.y && bird_position.y < min_y)
+            // check if RocketMan and the platform is colliding, if so, make the bird jump
+            if(rm_position.x > max_x && rm_position.x < min_x &&
+               rm_position.y > platform_position.y && rm_position.y < min_y)
                 _jump();
         }
         
-        // The game is endless in the original version.. when the bird falls down and is longer on the screen, call the game done and
+        // The game is endless in the original version.. when RocketMan falls down and is longer on the screen, call the game done and
         // show the high score screen
-        if(bird_position.y < - bird_size.height)
+        if(rm_position.y < - rm_size.height)
             _showHighScores();
         
     }
-    else if(bird_position.y > SCREEN_HEIGHT * 0.5f)
+    else if(rm_position.y > SCREEN_HEIGHT * 0.5f)
     {
-        float delta = bird_position.y - SCREEN_HEIGHT * 0.5f;
-        bird_position.y = SCREEN_HEIGHT * 0.5f;
+        float delta = rm_position.y - SCREEN_HEIGHT * 0.5f;
+        rm_position.y = SCREEN_HEIGHT * 0.5f;
         currentPlatformY -= delta;
         
         //for(cloudTag = kCloudsStartTag; cloudTag < kCloudsStartTag + K_NUM_CLOUDS; cloudTag++)
@@ -298,12 +297,12 @@ void GameLayer::update(float dt)
         if(exit->isVisible())
         {
             CCPoint position = exit->getPosition();
-            // check if the bird and the exit are colliding, if so, finish the game
+            // check if RocketMan and the exit are colliding, if so, finish the game
             float range = 20.0f;
-            if(bird_position.x > position.x - range &&
-               bird_position.x < position.x + range &&
-               bird_position.y > position.y - range &&
-               bird_position.y < position.y + range)
+            if(rm_position.x > position.x - range &&
+               rm_position.x < position.x + range &&
+               rm_position.y > position.y - range &&
+               rm_position.y < position.y + range)
             {
                 // TODO: (would be nice to show an animation when exiting)
                 _showHighScores();
@@ -342,8 +341,8 @@ void GameLayer::update(float dt)
         scoreLabel->setString(scoreStr->getCString());
     }
     
-    // draw the bird at its new position
-    bird->setPosition(bird_position);
+    // draw RocketMan at its new position
+    rocketMan->setPosition(rm_position);
 }
 
 void GameLayer::_initPlatform()
@@ -449,24 +448,24 @@ void GameLayer::_resetPlatforms()
     gameSuspended = false;
 }
 
-// bird logic
-void GameLayer::_resetBird()
+// RocketMan logic
+void GameLayer::_resetRocketMan()
 {
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
-    CCSprite* bird = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kBird));
+    CCSprite* rocketMan = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kRocketMan));
     
-    bird_position.x = SCREEN_WIDTH * 0.5f;
-    bird_position.y = SCREEN_WIDTH * 0.5f;
-    bird->setPosition(bird_position);
+    rm_position.x = SCREEN_WIDTH * 0.5f;
+    rm_position.y = SCREEN_WIDTH * 0.5f;
+    rocketMan->setPosition(rm_position);
     
-    bird_velocity.x = 0;
-    bird_velocity.y = 0;
+    rm_velocity.x = 0;
+    rm_velocity.y = 0;
     
-    bird_acceleration.x = 0;
-    bird_acceleration.y = -550.0f;
+    rm_acceleration.x = 0;
+    rm_acceleration.y = -550.0f;
     
-    birdLookingRight = true;
-    bird->setScaleX(1.0f);
+    rm_lookingRight = true;
+    rocketMan->setScaleX(1.0f);
 }
 
 void GameLayer::_resetBonus()
@@ -493,25 +492,25 @@ void GameLayer::_startGame()
     score = 0;
     //resetClouds();
     _resetPlatforms();
-    _resetBird();
+    _resetRocketMan();
     _resetBonus();
 }
 
-// when the bird is jumping, this is  its velocity
+// when RocketMan is jumping, this is  its velocity
 void GameLayer::_jump()
 {
     // play sound effect when player jumps
 #if K_PLAY_SOUND_EFFECTS
     CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sounds/jump.wav");
 #endif
-    bird_velocity.y = 350.0f + fabsf(bird_velocity.x);
+    rm_velocity.y = 350.0f + fabsf(rm_velocity.x);
 }
 
 
-// on receving a boost, the bird jumps super high with a super velocity
+// on receving a boost, RocketMan jumps super high with a super velocity
 void GameLayer::_superJump()
 {
-    bird_velocity.y = 1000.0f + fabsf(bird_velocity.x);
+    rm_velocity.y = 1000.0f + fabsf(rm_velocity.x);
 }
 
 // Assuming that when the game gets over, the high scores need to be shown, so transition over to that
