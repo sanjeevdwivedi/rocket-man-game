@@ -102,7 +102,7 @@ GameLayer::GameLayer()
     // play and loop background music during game
     auto soundEngine = CocosDenshion::SimpleAudioEngine::sharedEngine();
     soundEngine->playBackgroundMusic("Sounds/background.wav", true);
-    soundEngine->setBackgroundMusicVolume(.05f);
+    soundEngine->setBackgroundMusicVolume(K_PLAY_BACKGROUND_MUSIC_VOLUME);
 #endif
 }
 
