@@ -44,7 +44,9 @@ GameLayer::GameLayer()
     _initPlatforms();
     
     // We don't need a packed sprite, we can pick individual textures. Here we are getting the sprite for the bird
-    CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 44, 32));
+    //CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 44, 32));
+	//EMchange: the size of the sprite, 50*60
+	CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 50, 60));
     batchNode->addChild(bird, 4, kBird);
     
     // add the exit arrow
@@ -252,24 +254,24 @@ void GameLayer::update(float dt)
         bird_position.y = SCREEN_HEIGHT * 0.5f;
         currentPlatformY -= delta;
         
-        for(cloudTag = kCloudsStartTag; cloudTag < kCloudsStartTag + K_NUM_CLOUDS; cloudTag++)
-        {
-            CCSprite* cloud = dynamic_cast<CCSprite*>(batchNode->getChildByTag(cloudTag));
-            CCPoint position = cloud->getPosition();
-            position.y -= delta * cloud->getScaleY() * 0.8f;
-            
-            // assuming that the clouds in the background, when they have scrolled off the screen
-            // reset them so that they will scroll in from the bottom
-            if(position.y < -cloud->getContentSize().height * 0.5f)
-            {
-                currentCloudTag = cloudTag;
-                resetCloud();
-            }
-            else
-            {
-                cloud->setPosition(position);
-            }
-        }
+        //for(cloudTag = kCloudsStartTag; cloudTag < kCloudsStartTag + K_NUM_CLOUDS; cloudTag++)
+        //{
+        //    CCSprite* cloud = dynamic_cast<CCSprite*>(batchNode->getChildByTag(cloudTag));
+        //    CCPoint position = cloud->getPosition();
+        //    position.y -= delta * cloud->getScaleY() * 0.8f;
+        //    
+        //    // assuming that the clouds in the background, when they have scrolled off the screen
+        //    // reset them so that they will scroll in from the bottom
+        //    if(position.y < -cloud->getContentSize().height * 0.5f)
+        //    {
+        //        currentCloudTag = cloudTag;
+        //        resetCloud();
+        //    }
+        //    else
+        //    {
+        //        cloud->setPosition(position);
+        //    }
+        //}
         
 
         for(platformTag = kPlatformsStartTag; platformTag < kPlatformsStartTag + K_NUM_PLATFORMS; platformTag++)
@@ -347,14 +349,21 @@ void GameLayer::update(float dt)
 void GameLayer::_initPlatform()
 {
     CCRect rect;
-    switch((int)CCRANDOM_0_1() * 2)
+    switch((int)(CCRANDOM_0_1() *2))
     {
         case 0:
-            rect = CCRectMake(608, 64, 102, 36);
+            //rect = CCRectMake(608, 64, 102, 36);
+			//EMChange: change the size and position of the beam
+			rect = CCRectMake(608, 90, 102, 22);
             break;
         case 1:
-            rect = CCRectMake(608, 128, 90, 32);
+            //rect = CCRectMake(608, 128, 90, 32);
+			//EMChange: change the size and position of the sprite
+			rect = CCRectMake(608, 140, 102, 22);
             break;
+
+		default:
+			return;
     }
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
     CCSprite* platform = CCSprite::createWithTexture(batchNode->getTexture(), rect);
@@ -482,7 +491,7 @@ void GameLayer::_resetBonus()
 void GameLayer::_startGame()
 {
     score = 0;
-    resetClouds();
+    //resetClouds();
     _resetPlatforms();
     _resetBird();
     _resetBonus();

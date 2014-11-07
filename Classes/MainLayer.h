@@ -19,14 +19,9 @@ public:
     MainLayer();
 
     static cocos2d::CCScene* scene();
-    void initCloud();
-    void initClouds();
-    void resetCloud();
-    void resetClouds();
-    virtual void update(float dt);
+	virtual void update(float dt);
     
 protected:
-    int currentCloudTag;
     
 };
 
