@@ -58,10 +58,17 @@ GameLayer::GameLayer()
     
     // enable the accelerometer
     setAccelerometerEnabled(true);
+
+    // play and loop background music during game
+    auto soundEngine = CocosDenshion::SimpleAudioEngine::sharedEngine();
+    soundEngine->playBackgroundMusic("Sounds/background.wav", true);
+    soundEngine->setBackgroundMusicVolume(K_PLAY_BACKGROUND_MUSIC_VOLUME);
 }
 
 GameLayer::~GameLayer()
 {
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->stopAllEffects();
 }
 
 
@@ -127,7 +134,12 @@ void GameLayer::update(float dt)
 // when RocketMan is jumping, this is  its velocity
 void GameLayer::_jump()
 {
-    rm_velocity.y = 350.0f + fabsf(rm_velocity.x);
+    // check if we are already jumping to avoid retrigger of effect
+    if (rm_velocity.y < 100)
+    {
+        CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sounds/jump.wav");
+    }
+    rm_velocity.y = 1000.0f + fabsf(rm_velocity.x);
 }
 
 

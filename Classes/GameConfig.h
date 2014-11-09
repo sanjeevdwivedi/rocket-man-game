@@ -20,6 +20,7 @@
 #define SCREEN_HEIGHT 480
 #define DISPLAY_STATS true
 
+#define K_PLAY_BACKGROUND_MUSIC_VOLUME 0.2f
 
 enum {
     kSpriteManager = 0,
