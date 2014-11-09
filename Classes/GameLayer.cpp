@@ -48,7 +48,7 @@ GameLayer::GameLayer()
 	//EMchange: the size of the sprite, 50*60
 	CCSprite* rocketman = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 50, 60));
     batchNode->addChild(rocketman, 4, kRocketMan);
-    
+
     // add the exit arrow
     CCSprite* exit = CCSprite::create("exit_arrow.png");
     exit->setTag(kExit);
@@ -129,10 +129,10 @@ void GameLayer::update(float dt)
     rm_position.x += rm_velocity.x * dt;
     // rm_lookingRight/Left is used to flip RocketMan in the right direction i.e. direction of the velocity
     // so RocketMan does not travel backwards
-    if(rm_velocity.x < -30.0f && rm_lookingRight)
+    if (rm_velocity.x < -30.0f && rm_lookingRight)
     {
         rm_lookingRight = false;
-        
+
         // what is the point of setting scaleX?
         rocketMan->setScaleX(-1.0f);
     }
@@ -140,6 +140,7 @@ void GameLayer::update(float dt)
     {
         rm_lookingRight = true;
         rocketMan->setScaleX(1.0f);
+
     }
     
     CCSize rm_size = rocketMan->getContentSize();
