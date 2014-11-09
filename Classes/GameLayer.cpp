@@ -29,9 +29,10 @@ void GameLayer::didAccelerate(CCAcceleration *pAccelerationValue)
     // RocketMan's acceleration, left and right
     float accel_filter = 0.1f;
     rm_velocity.x = rm_velocity.x * accel_filter + pAccelerationValue->x * (1.0f - accel_filter) * 500.0f;
-}
 
-// TODO: Does the game create all the levels in the beginning itself?
+    // RocketMan's acceleration, up and and down
+    rm_velocity.y = rm_velocity.y * accel_filter + pAccelerationValue->y * (1.0f - accel_filter) * 500.0f;
+}
 
 GameLayer::GameLayer()
 {
@@ -69,20 +70,22 @@ void GameLayer::update(float dt)
     if(gameSuspended)
         return;
     
-    // MainLayer shows the background with clouds that does just scrolls but does not interact
+    // MainLayer shows the background 
     MainLayer::update(dt);
     
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
     CCSprite* rocketMan = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kRocketMan));
     
     rm_position.x += rm_velocity.x * dt;
+    rm_position.y += rm_velocity.y * dt;
+
     // rm_lookingRight/Left is used to flip RocketMan in the right direction i.e. direction of the velocity
     // so RocketMan does not travel backwards
     if (rm_velocity.x < -30.0f && rm_lookingRight)
     {
         rm_lookingRight = false;
 
-        // what is the point of setting scaleX?
+        // flip RocketMan on the x axis
         rocketMan->setScaleX(-1.0f);
     }
     else if (rm_velocity.x > 30.0f && !rm_lookingRight)
@@ -101,6 +104,15 @@ void GameLayer::update(float dt)
     if(rm_position.x < min_x)
         rm_position.x = max_x;
     
+    float max_y = SCREEN_HEIGHT + rm_size.height * 0.5f;
+    float min_y = -rm_size.height * 0.5f;
+
+    if (rm_position.y > max_y)
+        rm_position.y = min_y;
+
+    if (rm_position.y < min_y)
+        rm_position.y = max_y;
+
     // draw RocketMan at its new position
     rocketMan->setPosition(rm_position);
 }
@@ -120,7 +132,7 @@ void GameLayer::_resetRocketMan()
     rm_velocity.y = 0;
     
     rm_acceleration.x = 0;
-    rm_acceleration.y = -550.0f;
+    rm_acceleration.y = 0;
     
     rm_lookingRight = true;
     rocketMan->setScaleX(1.0f);
