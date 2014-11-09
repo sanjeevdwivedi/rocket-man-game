@@ -33,7 +33,10 @@ private:
     
 private:
     void _resetRocketMan();
+    void _initPlatform();
     void _startGame();
+    bool _collision(cocos2d::CCSprite* a, cocos2d::CCSprite* b);
+    void _jump();
 };
 
 #endif /* defined(__TweeJumpCocos2dx__GameLayer__) */

@@ -23,7 +23,8 @@
 
 enum {
     kSpriteManager = 0,
-    kRocketMan
+    kRocketMan,
+    kPlatform
 };
 
 

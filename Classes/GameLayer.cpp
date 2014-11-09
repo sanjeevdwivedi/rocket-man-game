@@ -43,7 +43,7 @@ GameLayer::GameLayer()
     // We don't need a packed sprite, we can pick individual textures. Here we are getting the sprite for RocketMan
     //CCSprite* bird = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 44, 32));
 	//EMchange: the size of the sprite, 50*60
-	CCSprite* rocketman = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 50, 60));
+	CCSprite* rocketman = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 40, 60));
     batchNode->addChild(rocketman, 4, kRocketMan);
 
     CCSize landscapeSize = CCDirector::sharedDirector()->getVisibleSize();
@@ -113,8 +113,21 @@ void GameLayer::update(float dt)
     if (rm_position.y < min_y)
         rm_position.y = max_y;
 
+    CCSprite* platform = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kPlatform));
+
+    if (_collision(rocketMan, platform))
+    {
+        _jump();
+    }
+
     // draw RocketMan at its new position
     rocketMan->setPosition(rm_position);
+}
+
+// when RocketMan is jumping, this is  its velocity
+void GameLayer::_jump()
+{
+    rm_velocity.y = 350.0f + fabsf(rm_velocity.x);
 }
 
 
@@ -125,7 +138,7 @@ void GameLayer::_resetRocketMan()
     CCSprite* rocketMan = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kRocketMan));
     
     rm_position.x = SCREEN_WIDTH * 0.5f;
-    rm_position.y = SCREEN_HEIGHT * 0.5f;
+    rm_position.y = SCREEN_HEIGHT * 0.25f;
     rocketMan->setPosition(rm_position);
     
     rm_velocity.x = 0;
@@ -138,12 +151,37 @@ void GameLayer::_resetRocketMan()
     rocketMan->setScaleX(1.0f);
 }
 
-
+void GameLayer::_initPlatform()
+{
+    CCRect rect(610, 90, 100, 20);
+    CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
+    CCSprite* platform = CCSprite::createWithTexture(batchNode->getTexture(), rect);
+    platform->setPosition(CCPoint(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f));
+    batchNode->addChild(platform, 3, kPlatform);
+}
 
 void GameLayer::_startGame()
 {
     _resetRocketMan();
+    _initPlatform();
     gameSuspended = false;
+}
+
+bool GameLayer::_collision(CCSprite* a, CCSprite* b)
+{
+    CCRect aRect = CCRectMake(
+        a->getPosition().x - (a->getContentSize().width * 0.5f),
+        a->getPosition().y - (a->getContentSize().height * 0.5f),
+        a->getContentSize().width,
+        a->getContentSize().height);
+
+    CCRect bRect = CCRectMake(
+        b->getPosition().x - (b->getContentSize().width * 0.5f),
+        b->getPosition().y - (b->getContentSize().height * 0.5f),
+        b->getContentSize().width,
+        b->getContentSize().height);
+
+    return aRect.intersectsRect(bRect);
 }
 
 
