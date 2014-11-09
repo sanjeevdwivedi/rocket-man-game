@@ -140,7 +140,6 @@ void GameLayer::update(float dt)
     {
         rm_lookingRight = true;
         rocketMan->setScaleX(1.0f);
-
     }
     
     CCSize rm_size = rocketMan->getContentSize();
