@@ -19,29 +19,11 @@ public:
     virtual void draw();
     
 private:
-    cocos2d::CCLayerColor* _playerPopup;
-    std::string currentPlayer;
     int currentScore;
-    int currentScorePosition;
     
 private:
-    std::vector<std::string> split(std::string str, std::string value);
-    void _loadCurrentPlayer();
-    void _loadHighScores();
-    void _updateHighScores();
-    void _saveCurrentPlayer();
 
-#if defined(WP8) || defined(WINRT)
-    void _changePlayerDone(CCObject* pObject);
-    void _cancelPopupPlayer(CCObject* pObject);
-#else
-    void _changePlayerDone();
-    void _cancelPopupPlayer();
-#endif
-
-    void _popUpPlayer();
     void button1Callback(cocos2d::CCObject* pSender);
-    void button2Callback(cocos2d::CCObject* pSender);
     
 };
 
