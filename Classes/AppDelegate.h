@@ -1,6 +1,6 @@
 //
-//  TweeJumpCocos2dxAppDelegate.h
-//  TweeJumpCocos2dx
+//  RocketManCocos2dxAppDelegate.h
+//  RocketManCocos2dx
 //
 //  Created by Carlos Pinan on 13/10/13.
 //  Copyright __MyCompanyName__ 2013. All rights reserved.

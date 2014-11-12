@@ -1,6 +1,6 @@
 //
 //  MainLayer.cpp
-//  TweeJumpCocos2dx
+//  RocketManCocos2dx
 //
 //  Created by Carlos Pinan on 13/10/13.
 //

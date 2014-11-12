@@ -1,13 +1,13 @@
 //
 //  GameConfig.h
-//  TweeJumpCocos2dx
+//  RocketManCocos2dx
 //
 //  Created by Carlos Pinan on 13/10/13.
 //
 //
 
-#ifndef TweeJumpCocos2dx_GameConfig_h
-#define TweeJumpCocos2dx_GameConfig_h
+#ifndef RocketManCocos2dx_GameConfig_h
+#define RocketManCocos2dx_GameConfig_h
 
 #include <ctime>
 #include <cstdlib>

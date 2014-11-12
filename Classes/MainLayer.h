@@ -1,13 +1,14 @@
 //
 //  MainLayer.h
-//  TweeJumpCocos2dx
+//  RocketManCocos2dx
 //
+//  Modified by Sanjeev Dwivedi, Dale Stammen and Eric Mitelette
 //  Created by Carlos Pinan on 13/10/13.
 //
 //
 
-#ifndef __TweeJumpCocos2dx__MainLayer__
-#define __TweeJumpCocos2dx__MainLayer__
+#ifndef __RocketManCocos2dx__MainLayer__
+#define __RocketManCocos2dx__MainLayer__
 
 #include "cocos2d.h"
 #include "GameConfig.h"
@@ -25,4 +26,4 @@ protected:
     
 };
 
-#endif /* defined(__TweeJumpCocos2dx__MainLayer__) */
+#endif /* defined(__RocketManCocos2dx__MainLayer__) */
