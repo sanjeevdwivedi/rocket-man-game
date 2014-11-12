@@ -2,6 +2,7 @@
 //  RocketManCocos2dxAppDelegate.h
 //  RocketManCocos2dx
 //
+//  Modified by Sanjeev Dwivedi, Dale Stammen and Eric Mitelette
 //  Created by Carlos Pinan on 13/10/13.
 //  Copyright __MyCompanyName__ 2013. All rights reserved.
 //

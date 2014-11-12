@@ -2,6 +2,7 @@
 //  MainLayer.cpp
 //  RocketManCocos2dx
 //
+//  Modified by Sanjeev Dwivedi, Dale Stammen and Eric Mitelette
 //  Created by Carlos Pinan on 13/10/13.
 //
 //
