@@ -34,6 +34,21 @@ GameLayer::GameLayer()
     CCSprite* rocketman = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 50, 60));
     batchNode->addChild(rocketman, 4, kRocketMan);
 
+    CCSize landscapeSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCSize visibleSize = CCSize(landscapeSize.width, landscapeSize.height);
+    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+
+    // Add the healthbar and initialize it to be 100
+    pHealthSprite = CCSprite::create("health_bar.png");
+    pHealthSprite->setAnchorPoint(ccp(0.0, 0.0));
+    pHealthBar = CCProgressTimer::create(pHealthSprite);
+    pHealthBar->setScale(0.5, 0.5);
+    pHealthBar->setType(kCCProgressTimerTypeBar);
+    pHealthBar->setBarChangeRate(ccp(1, 0));
+    pHealthBar->setPercentage(100);
+    pHealthBar->setPosition(ccp(origin.x + 10, visibleSize.height - 20));
+    this->addChild(pHealthBar);
+
     CCLabelBMFont* scoreLabel = CCLabelBMFont::create("0", "bitmapFont.fnt");
     addChild(scoreLabel, 5, kScoreLabel);
     scoreLabel->setPosition(ccp(160, 430));
@@ -119,6 +134,19 @@ void GameLayer::update(float dt)
 
     rm_velocity.y += rm_acceleration.y * dt;
     rm_position.y += rm_velocity.y * dt;
+
+    // Just set it so that every 20 frames, we decrease the percentage by 1
+    // when the percentage goes below zero, the healthbar is finished and finish the game
+    // We should show some animation that the health is over.
+    fuelInTank--;
+    if (fuelInTank % 20 == 0)
+    {
+        pHealthBar->setPercentage(pHealthBar->getPercentage() - 1.0);
+        if (pHealthBar->getPercentage() <= 0)
+        {
+            // TODO: show high scores
+        }
+    }
 
     // Add the collision logic between the rocketman and the struss/asteroid. The rocketman collides only 
     // when he is falling down.

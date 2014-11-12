@@ -38,6 +38,9 @@ private:
     float currentPlatformY;
     float currentMaxPlatformStep;
 
+    cocos2d::CCSprite *pHealthSprite;
+    cocos2d::CCProgressTimer *pHealthBar;
+    int fuelInTank;
 
     void _jump();
     void _initPlatform();
