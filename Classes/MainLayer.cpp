@@ -33,8 +33,6 @@ MainLayer::MainLayer()
     background->setPosition(ccp(SCREEN_WIDTH * 0.5f, SCREEN_HEIGHT * 0.5f));
 }
 
-
-
 void MainLayer::update(float dt)
 {
 }

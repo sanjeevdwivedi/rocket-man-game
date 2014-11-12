@@ -20,11 +20,15 @@
 #define SCREEN_HEIGHT 480
 #define DISPLAY_STATS true
 
-
-
-
 enum {
     kSpriteManager = 0,
+    kRocketMan,
+    kScoreLabel,
+    kExit,
+    kPlatformsStartTag = 2000,
+    kBonusStartTag = 3000,
+    kPopUpPlayerTag = 10000,
+    kPopUpEditBoxTag = 150000
 };
 
 

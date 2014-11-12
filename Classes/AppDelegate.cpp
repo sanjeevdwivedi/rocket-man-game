@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "MainLayer.h"
+#include "GameLayer.h"
 #include "GameConfig.h"
 
 #include <string>
@@ -52,7 +53,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    CCScene *pScene = MainLayer::scene();
+    //CCScene *pScene = MainLayer::scene();
+    CCScene *pScene = GameLayer::scene();
 
     // run
     pDirector->runWithScene(pScene);
