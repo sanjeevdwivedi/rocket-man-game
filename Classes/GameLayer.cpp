@@ -1,6 +1,6 @@
 //
 //  GameLayer.cpp
-//  TweeJumpCocos2dx
+//  RocketManCocos2dx
 //
 //  Modified by Sanjeev Dwivedi, Dale Stammen and Eric Mitelette
 //  Created by Carlos Pinan on 13/10/13.
@@ -9,6 +9,7 @@
 
 #include "GameLayer.h"
 #include "SimpleAudioEngine.h"
+#include "HighScoreLayer.h"
 
 using namespace cocos2d;
 
@@ -157,6 +158,7 @@ void GameLayer::update(float dt)
         if (pHealthBar->getPercentage() <= 0)
         {
             // TODO: show high scores
+            _showHighScores();
         }
     }
 
@@ -232,6 +234,7 @@ void GameLayer::update(float dt)
             if (rm_position.y < -rm_size.height)
             {
                 // TODO: (exit the game here)
+                _showHighScores();
             }
         }
 
@@ -428,3 +431,15 @@ void GameLayer::didAccelerate(CCAcceleration *pAccelerationValue)
     float accel_filter = 0.1f;
     rm_velocity.x = rm_velocity.x * accel_filter + pAccelerationValue->x * (1.0f - accel_filter) * 500.0f;
 }
+
+void GameLayer::_showHighScores()
+{
+    gameSuspended = true;
+    stopAllActions();
+    unscheduleUpdate();
+
+    CCTransitionFade* scene = CCTransitionFade::create(1.0f, HighScoreLayer::scene(score), ccWHITE);
+    CCDirector::sharedDirector()->replaceScene(scene);
+}
+
+

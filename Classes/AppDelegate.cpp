@@ -13,6 +13,7 @@
 #include "SimpleAudioEngine.h"
 #include "MainLayer.h"
 #include "GameLayer.h"
+#include "HighScoreLayer.h"
 #include "GameConfig.h"
 
 #include <string>
@@ -58,7 +59,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     // create a scene. it's an autorelease object
     //CCScene *pScene = MainLayer::scene();
-    CCScene *pScene = GameLayer::scene();
+    //CCScene *pScene = GameLayer::scene();
+    CCScene *pScene = HighScoreLayer::scene(0);
 
     // run
     pDirector->runWithScene(pScene);

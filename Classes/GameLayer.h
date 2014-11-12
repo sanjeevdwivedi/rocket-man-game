@@ -53,7 +53,7 @@ private:
     void _resetRocketMan();
     void _resetBonus();
     void _superJump();
-
+    void _showHighScores();
 };
 
 #endif /* defined(__RocketManCocos2dx__GameLayer__) */
