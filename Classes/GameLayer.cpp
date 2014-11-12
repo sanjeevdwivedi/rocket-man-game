@@ -25,6 +25,9 @@ GameLayer::GameLayer()
 {
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
 
+    // Initialize all the platforms
+    _initPlatforms();
+
     // Load the rocketman sprite and call the startGame function which simply draws the rocketman in the middle of the screen
     CCSprite* rocketman = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 50, 60));
     batchNode->addChild(rocketman, 4, kRocketMan);
@@ -41,6 +44,7 @@ GameLayer::GameLayer()
 
 void GameLayer::_startGame()
 {
+    _resetPlatforms();
     _resetRocketMan();
 }
 
@@ -65,4 +69,78 @@ GameLayer::~GameLayer()
 {
     CocosDenshion::SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
     CocosDenshion::SimpleAudioEngine::sharedEngine()->stopAllEffects();
+}
+
+void GameLayer::_initPlatform()
+{
+    CCRect rect;
+    switch ((int)(CCRANDOM_0_1() * 2))
+    {
+    case 0:
+        rect = CCRectMake(608, 90, 102, 22);
+        break;
+    case 1:
+        rect = CCRectMake(608, 140, 102, 22);
+        break;
+
+    default:
+        return;
+    }
+    CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
+    CCSprite* platform = CCSprite::createWithTexture(batchNode->getTexture(), rect);
+    batchNode->addChild(platform, 3, currentPlatformTag);
+}
+
+void GameLayer::_initPlatforms()
+{
+    currentPlatformTag = kPlatformsStartTag;
+    while (currentPlatformTag < kPlatformsStartTag + K_NUM_PLATFORMS)
+    {
+        _initPlatform();
+        currentPlatformTag++;
+    }
+}
+void GameLayer::_resetPlatform()
+{
+    if (currentPlatformY < 0)
+        currentPlatformY = 30.0f;
+    else
+    {
+        currentPlatformY += CCRANDOM_0_1() * (int)(currentMaxPlatformStep - K_MIN_PLATFORM_STEP) + K_MIN_PLATFORM_STEP;
+        if (currentMaxPlatformStep < K_MAX_PLATFORM_STEP)
+            currentMaxPlatformStep += 0.5f;
+    }
+
+    CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
+    CCSprite* platform = dynamic_cast<CCSprite*>(batchNode->getChildByTag(currentPlatformTag));
+
+    if (CCRANDOM_0_1() * 2 == 1)
+        platform->setScaleX(-1.0f);
+
+    float x;
+
+    CCSize size = platform->getContentSize();
+
+    if (currentPlatformY == 30.0f)
+        x = SCREEN_WIDTH * 0.5f;
+    else
+        x = CCRANDOM_0_1() * (SCREEN_WIDTH - (int)size.width) + size.width * 0.5f;
+
+    platform->setPosition(ccp(x, currentPlatformY));
+    platformCount++;
+}
+
+void GameLayer::_resetPlatforms()
+{
+    currentPlatformY = -1;
+    currentPlatformTag = kPlatformsStartTag;
+    currentMaxPlatformStep = 60.0f;
+
+    platformCount = 0;
+
+    while (currentPlatformTag < kPlatformsStartTag + K_NUM_PLATFORMS)
+    {
+        _resetPlatform();
+        currentPlatformTag++;
+    }
 }

@@ -24,7 +24,16 @@ public:
 
 private:
     cocos2d::CCPoint rm_position;
+    int currentPlatformTag;
+    int platformCount;
+    float currentPlatformY;
+    float currentMaxPlatformStep;
 
+
+    void _initPlatform();
+    void _initPlatforms();
+    void _resetPlatform();
+    void _resetPlatforms();
     void _startGame();
     void _resetRocketMan();
 };
