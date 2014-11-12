@@ -144,6 +144,9 @@ void GameLayer::update(float dt)
     }
     else if (rm_position.y > SCREEN_HEIGHT * 0.5f)
     {
+        // If the rocketman is going past half the screen, we move the platforms down
+        // and add new platforms at the top to make it feel like the rocketman is moving up
+        // Obviously, the platforms cannot go down, can they :)
         float delta = rm_position.y - SCREEN_HEIGHT * 0.5f;
         rm_position.y = SCREEN_HEIGHT * 0.5f;
         currentPlatformY -= delta;
