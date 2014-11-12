@@ -46,6 +46,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set search paths
     CCFileUtils::sharedFileUtils()->setSearchPaths(searchPath);
 
+    // Preload the audio effects in the beginning so that there is no stall at a later point of time when we need them.
+    SimpleAudioEngine::sharedEngine()->preloadEffect(CCFileUtils::sharedFileUtils()->fullPathForFilename("Sounds/background.wav").c_str());
+    SimpleAudioEngine::sharedEngine()->preloadEffect(CCFileUtils::sharedFileUtils()->fullPathForFilename("Sounds/jump.wav").c_str());
+
     // turn on display FPS
     pDirector->setDisplayStats(DISPLAY_STATS);
 
