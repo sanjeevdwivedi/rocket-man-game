@@ -23,6 +23,7 @@ GameLayer::GameLayer()
 {
     CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
 
+    // Load the rocketman sprite and call the startGame function which simply draws the rocketman in the middle of the screen
     CCSprite* rocketman = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 50, 60));
     batchNode->addChild(rocketman, 4, kRocketMan);
 
