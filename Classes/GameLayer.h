@@ -22,12 +22,22 @@ public:
     void update(float dt);
     static cocos2d::CCScene* scene();
 
+    void didAccelerate(cocos2d::CCAcceleration *pAccelerationValue);
+
 private:
     cocos2d::CCPoint rm_position;
+    cocos2d::ccVertex2F rm_velocity;
+    cocos2d::ccVertex2F rm_acceleration;
+
+    bool gameSuspended;
+    bool rm_lookingRight;
+
+
     int currentPlatformTag;
     int platformCount;
     float currentPlatformY;
     float currentMaxPlatformStep;
+
 
 
     void _initPlatform();
