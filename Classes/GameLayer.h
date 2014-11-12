@@ -39,7 +39,7 @@ private:
     float currentMaxPlatformStep;
 
 
-
+    void _jump();
     void _initPlatform();
     void _initPlatforms();
     void _resetPlatform();

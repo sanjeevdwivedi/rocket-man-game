@@ -128,11 +128,41 @@ void GameLayer::update(float dt)
         rm_velocity.y = 0;
     }
 
+    int platformTag;
+    if (rm_velocity.y < 0)
+    {
+        for (platformTag = kPlatformsStartTag; platformTag < kPlatformsStartTag + K_NUM_PLATFORMS; platformTag++)
+        {
+            CCSprite* platform = dynamic_cast<CCSprite*>(batchNode->getChildByTag(platformTag));
+            CCSize platform_size = platform->getContentSize();
+            CCPoint platform_position = platform->getPosition();
 
+            max_x = platform_position.x - platform_size.width * 0.5f - 10;
+            min_x = platform_position.x + platform_size.width * 0.5f + 10;
+            float min_y = platform_position.y + (platform_size.height + rm_size.height) * 0.5f - K_PLATFORM_TOP_PADDING;
+
+            // check if RocketMan and the platform is colliding, if so, make the Rocketman jump
+            if (rm_position.x > max_x && rm_position.x < min_x &&
+                rm_position.y > platform_position.y && rm_position.y < min_y)
+                _jump();
+        }
+
+    }
 
     // draw RocketMan at its new position
     rocketMan->setPosition(rm_position);
 }
+
+// when RocketMan is jumping, this is  its velocity
+void GameLayer::_jump()
+{
+    // play sound effect when player jumps
+#if K_PLAY_SOUND_EFFECTS
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("Sounds/jump.wav");
+#endif
+    rm_velocity.y = 350.0f + fabsf(rm_velocity.x);
+}
+
 
 // When we exit the layer, stop all background music and any other audio effects being played
 GameLayer::~GameLayer()
