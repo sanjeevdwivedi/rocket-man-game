@@ -121,13 +121,9 @@ void GameLayer::update(float dt)
         rm_position.y = SCREEN_HEIGHT * 0.5f;
     }
 
-    // temporarily make the Rocketman go to the top
-    if (rm_position.y < 0)
-    {
-        rm_position.y = SCREEN_HEIGHT;
-        rm_velocity.y = 0;
-    }
 
+    // Add the collision logic between the rocketman and the struss/asteroid. The rocketman collides only 
+    // when he is falling down.
     int platformTag;
     if (rm_velocity.y < 0)
     {
