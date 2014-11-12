@@ -32,7 +32,7 @@ private:
     bool gameSuspended;
     bool rm_lookingRight;
 
-
+    int score;
     int currentPlatformTag;
     int platformCount;
     float currentPlatformY;

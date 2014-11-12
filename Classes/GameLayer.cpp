@@ -34,6 +34,10 @@ GameLayer::GameLayer()
     CCSprite* rocketman = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608, 16, 50, 60));
     batchNode->addChild(rocketman, 4, kRocketMan);
 
+    CCLabelBMFont* scoreLabel = CCLabelBMFont::create("0", "bitmapFont.fnt");
+    addChild(scoreLabel, 5, kScoreLabel);
+    scoreLabel->setPosition(ccp(160, 430));
+
     _startGame();
 
     scheduleUpdate();
@@ -53,6 +57,7 @@ GameLayer::GameLayer()
 
 void GameLayer::_startGame()
 {
+    score = 0;
     _resetPlatforms();
     _resetRocketMan();
 }
@@ -169,6 +174,11 @@ void GameLayer::update(float dt)
                 platform->setPosition(position);
             }
         }
+
+        score += (int)delta;
+        CCString* scoreStr = CCString::createWithFormat("%d", score);
+        CCLabelBMFont* scoreLabel = dynamic_cast<CCLabelBMFont*>(getChildByTag(kScoreLabel));
+        scoreLabel->setString(scoreStr->getCString());
     }
 
     // draw RocketMan at its new position
