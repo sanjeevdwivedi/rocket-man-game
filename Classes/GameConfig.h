@@ -45,5 +45,14 @@ enum {
     kPopUpEditBoxTag = 150000
 };
 
+enum
+{
+    kBonus5 = 0,
+    kBonus10,
+    kBonus50,
+    kBonus100,
+    kNumBonuses
+};
+
 
 #endif

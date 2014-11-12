@@ -49,6 +49,17 @@ GameLayer::GameLayer()
     pHealthBar->setPosition(ccp(origin.x + 10, visibleSize.height - 20));
     this->addChild(pHealthBar);
 
+    CCSprite* bonus;
+
+    // the bonus sprites which say 5, 10 etc can be picked from here
+    for (int i = 0; i < kNumBonuses; i++)
+    {
+        bonus = CCSprite::createWithTexture(batchNode->getTexture(), CCRectMake(608 + i * 32, 256, 25, 25));
+        batchNode->addChild(bonus, 4, kBonusStartTag + i);
+        bonus->setVisible(false);
+    }
+
+    // This is to create the score
     CCLabelBMFont* scoreLabel = CCLabelBMFont::create("0", "bitmapFont.fnt");
     addChild(scoreLabel, 5, kScoreLabel);
     scoreLabel->setPosition(ccp(160, 430));
@@ -75,6 +86,7 @@ void GameLayer::_startGame()
     score = 0;
     _resetPlatforms();
     _resetRocketMan();
+    _resetBonus();
 }
 
 // RocketMan logic
@@ -148,6 +160,55 @@ void GameLayer::update(float dt)
         }
     }
 
+    CCSprite* bonus = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kBonusStartTag + currentBonusType));
+
+    // check if the bonus node is visible
+    if (bonus->isVisible())
+    {
+        // check if RocketMan and the bonus are colliding, if so, give RocketMan the bonus
+        CCPoint bonus_position = bonus->getPosition();
+        float range = 20.0f;
+        if (rm_position.x > bonus_position.x - range &&
+            rm_position.x < bonus_position.x + range &&
+            rm_position.y > bonus_position.y - range &&
+            rm_position.y < bonus_position.y + range)
+        {
+            // TODO: Our bonuses should be more rocket fuel or additional lives
+            switch (currentBonusType)
+            {
+            case kBonus5:
+                score += 5000;
+                break;
+            case kBonus10:
+                score += 10000;
+                break;
+            case kBonus50:
+                score += 50000;
+                break;
+            case kBonus100:
+                score += 100000;
+                break;
+            }
+
+            CCString* scoreStr = CCString::createWithFormat("%d", score);
+            CCLabelBMFont* scoreLabel = dynamic_cast<CCLabelBMFont*>(getChildByTag(kScoreLabel));
+            scoreLabel->setString(scoreStr->getCString());
+
+            CCScaleTo* action1 = CCScaleTo::create(0.2f, 1.5f, 0.8f);
+            CCScaleTo* action2 = CCScaleTo::create(0.2f, 1.0f, 1.0f);
+
+            // What are CCScaleTo and CCSequence.. what do these actions do?
+            // Likely, this just makes RocketMan move up very fast without it having to collide with anything
+            CCSequence* action3 = CCSequence::create(action1, action2, action1, action2, action1, action2, NULL);
+            scoreLabel->runAction(action3);
+
+            // what does resetBonus do?
+            _resetBonus();
+
+            _superJump();
+
+        }
+    }
     // Add the collision logic between the rocketman and the struss/asteroid. The rocketman collides only 
     // when he is falling down.
     int platformTag;
@@ -203,6 +264,21 @@ void GameLayer::update(float dt)
             }
         }
 
+        // if the bonus was visible and is going to become invisible, reset it.
+        if (bonus->isVisible())
+        {
+            CCPoint position = bonus->getPosition();
+            position.y -= delta;
+            if (position.y < -bonus->getContentSize().height * 0.5f)
+            {
+                _resetBonus();
+            }
+            else
+            {
+                bonus->setPosition(position);
+            }
+        }
+
         score += (int)delta;
         CCString* scoreStr = CCString::createWithFormat("%d", score);
         CCLabelBMFont* scoreLabel = dynamic_cast<CCLabelBMFont*>(getChildByTag(kScoreLabel));
@@ -212,6 +288,34 @@ void GameLayer::update(float dt)
     // draw RocketMan at its new position
     rocketMan->setPosition(rm_position);
 }
+
+void GameLayer::_resetBonus()
+{
+    CCSpriteBatchNode* batchNode = dynamic_cast<CCSpriteBatchNode*>(getChildByTag(kSpriteManager));
+    CCSprite* bonus = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kBonusStartTag + currentBonusType));
+    bonus->setVisible(false);
+
+    currentBonusPlatformIndex += CCRANDOM_0_1() * (K_MAX_BONUS_STEP - K_MIN_BONUS_STEP) + K_MIN_BONUS_STEP;
+    // TODO: (uncomment below line to showcase a bonus at a fixed step for DEMO
+    //currentBonusPlatformIndex = 20;
+
+    if (score < 10000)
+        currentBonusType = 0;
+    else if (score < 50000)
+        currentBonusType = CCRANDOM_0_1() * 2;
+    else if (score < 100000)
+        currentBonusType = CCRANDOM_0_1() * 3;
+    else
+        currentBonusType = CCRANDOM_0_1() * 2 + 2;
+
+}
+
+// on receving a boost, RocketMan jumps super high with a super velocity
+void GameLayer::_superJump()
+{
+    rm_velocity.y = 1000.0f + fabsf(rm_velocity.x);
+}
+
 
 // when RocketMan is jumping, this is  its velocity
 void GameLayer::_jump()
@@ -288,6 +392,13 @@ void GameLayer::_resetPlatform()
 
     platform->setPosition(ccp(x, currentPlatformY));
     platformCount++;
+
+    if (platformCount == currentBonusPlatformIndex && platformCount != K_MAX_PLATFORMS_IN_GAME)
+    {
+        CCSprite* bonus = dynamic_cast<CCSprite*>(batchNode->getChildByTag(kBonusStartTag + currentBonusType));
+        bonus->setPosition(ccp(x, currentPlatformY + 30));
+        bonus->setVisible(true);
+    }
 }
 
 void GameLayer::_resetPlatforms()
@@ -295,7 +406,8 @@ void GameLayer::_resetPlatforms()
     currentPlatformY = -1;
     currentPlatformTag = kPlatformsStartTag;
     currentMaxPlatformStep = 60.0f;
-
+    currentBonusPlatformIndex = 0;
+    currentBonusType = 0;
     platformCount = 0;
 
     while (currentPlatformTag < kPlatformsStartTag + K_NUM_PLATFORMS)

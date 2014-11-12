@@ -37,6 +37,8 @@ private:
     int platformCount;
     float currentPlatformY;
     float currentMaxPlatformStep;
+    int currentBonusType;
+    int currentBonusPlatformIndex;
 
     cocos2d::CCSprite *pHealthSprite;
     cocos2d::CCProgressTimer *pHealthBar;
@@ -49,6 +51,9 @@ private:
     void _resetPlatforms();
     void _startGame();
     void _resetRocketMan();
+    void _resetBonus();
+    void _superJump();
+
 };
 
 #endif /* defined(__RocketManCocos2dx__GameLayer__) */
